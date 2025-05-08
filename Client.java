@@ -41,4 +41,23 @@ public class Client {
         String value = (parts.length > 2) ? String.join(" ", Arrays.copyOfRange(parts, 2, parts.length)) : null;
 
 
+        String request;
+        switch (op.toUpperCase()) {
+            case "PUT":
+                if (value == null) return null;
+                request = "P " + key + " " + value;
+                break;
+            case "GET":
+                request = "G " + key;
+                break;
+            case "READ":
+                request = "R " + key;
+                break;
+
+        }
+
+
+        int length = request.length() + 4;
+        return String.format("%03d %s", length, request);
+    }
 }
