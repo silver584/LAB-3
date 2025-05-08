@@ -67,10 +67,17 @@ public class Server {
             avgValueSize = totalValue / size;
             avgTupleSize = (totalKey + totalValue) / size;
         }
-
         System.out.printf("[Server Stats] Tuples: %d, Avg Tuple Size: %d, Avg Key Size: %d, Avg Value Size: %d, Total Clients: %d, Total Ops: %d, PUTs: %d, GETs: %d, READs: %d, Errors: %d%n",
                 size,
-
+                avgTupleSize,
+                avgKeySize,
+                avgValueSize,
+                totalClients.get(),
+                totalOperations.get(),
+                totalPuts.get(),
+                totalGets.get(),
+                totalReads.get(),
+                totalErrors.get());
     }
 
 
@@ -133,7 +140,14 @@ public class Server {
                         totalErrors.incrementAndGet();
                         return String.format("ERR %s does not exist", key);
                     }
-
+                case "R":
+                    if (tupleSpace.containsKey(key)) {
+                        totalReads.incrementAndGet();
+                        return String.format("OK (%s, %s) read", key, tupleSpace.get(key));
+                    } else {
+                        totalErrors.incrementAndGet();
+                        return String.format("ERR %s does not exist", key);
+                    }
                 default:
                     totalErrors.incrementAndGet();
                     return "ERR invalid operation";
