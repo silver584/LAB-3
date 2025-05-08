@@ -11,9 +11,6 @@ public class Client {
         String filePath = args[2];
 
 
-
-
-
         try (Socket socket = new Socket(host, port);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
@@ -35,3 +32,13 @@ public class Client {
             e.printStackTrace();
         }
     }
+    private static String buildRequest(String line) {
+        String[] parts = line.split(" ");
+        if (parts.length < 2) return null;
+
+        String op = parts[0];
+        String key = parts[1];
+        String value = (parts.length > 2) ? String.join(" ", Arrays.copyOfRange(parts, 2, parts.length)) : null;
+
+
+}
