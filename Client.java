@@ -53,7 +53,8 @@ public class Client {
             case "READ":
                 request = "R " + key;
                 break;
-
+            default:
+                return null;
         }
 
 
